@@ -44,5 +44,25 @@
       <max-dist>1000000</max-dist>
     </falling>
 
+    <falling>
+      <name>boom</name>
+      <mode>once</mode>
+      <path>Aircraft/MPCarrier/Sounds/boom.wav</path>
+      <condition> 
+
+	    <equals>
+		    <property>/damage/sounds/nearby-explosion-on</property>
+		    <value>1</value>
+		</equals>
+
+      </condition>
+      <volume> 
+        <factor>1.2</factor>
+        <max>1.0</max>
+      </volume>
+      <reference-dist>100</reference-dist>
+      <max-dist>1000000</max-dist>
+    </falling>
+
  </fx>
 </PropertyList>
