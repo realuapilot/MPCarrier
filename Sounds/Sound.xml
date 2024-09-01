@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PropertyList>
+ <fx>
+
+
+ 
+<falling>
+      <name>carrier falling</name>
+      <mode>once</mode>
+      <path>Aircraft/MPCarrier/Sounds/carrierfall.wav</path>
+      <condition> 
+
+	    <equals>
+		    <property>/controls/falling</property>
+		    <value>1</value>
+		</equals>
+
+      </condition>
+      <volume> 
+        <factor>1.2</factor>
+        <max>1.0</max>
+      </volume>
+      <reference-dist>100</reference-dist>
+      <max-dist>1000000</max-dist>
+    </falling>
+<falling>
+      <name>carrier splashed</name>
+      <mode>once</mode>
+      <path>Aircraft/MPCarrier/Sounds/splash.wav</path>
+      <condition> 
+
+	    <equals>
+		    <property>/controls/splashed</property>
+		    <value>1</value>
+		</equals>
+
+      </condition>
+      <volume> 
+        <factor>1.2</factor>
+        <max>1.0</max>
+      </volume>
+      <reference-dist>100</reference-dist>
+      <max-dist>1000000</max-dist>
+    </falling>
+
+ </fx>
+</PropertyList>
