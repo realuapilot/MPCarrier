@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<!--
+  Multiplayer carrier Clemenceau for FlightGear.
+
+  Copyright (C) 2007 - 2012  Anders Gidenstam  (anders(at)gidenstam.org)
+  This file is released under the GPL license version 2 or later.
+-->
+<PropertyList>
+
+ <nasal>
+  <load>
+##############################################################################
+# The on-load Nasal is not executed when this file is loaded as the user
+# aircraft.
+
+var rplayer = cmdarg();
+print("LOAD MP-Clemenceau " ~ rplayer.getPath());
+
+# Load the main MPCarriers Nasal module if needed.
+if (!contains(globals, "MPCarriers")) {
+  var base = "Aircraft/MPCarrier/Systems/MPCarriers.nas";
+  io.load_nasal(resolvepath(base), "MPCarriers");
+}
+
+# Create manager class.
+var manager = nil;
+var accept_callsign = "/sim/mp-carriers/clemenceau-callsign";
+
+var init = func {
+  # Initialize the callsign property if not done already.
+  props.globals.initNode(accept_callsign, "", "STRING");
+
+  manager = MPCarriers.Manager.new(rplayer,
+                                   "Clemenceau",
+                                   props.globals.getNode(accept_callsign));
+}
+
+settimer(init, 15);
+
+##############################################################################
+  </load>
+  <unload>
+##############################################################################
+   print("UNLOAD MP-Clemenceau ", cmdarg().getPath());
+   if (manager != nil) manager.die();
+##############################################################################
+  </unload>
+ </nasal>
+
+</PropertyList>
