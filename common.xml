@@ -140,27 +140,7 @@
 
 
 
-      <key n="46">
-        <name>period</name>
-        <desc>increase alt</desc>
-        <repeatable type="bool">true</repeatable>
-        <binding>
-          <command>nasal</command>
-          <script>CarrierControl.incalt(10,65)</script>
-        </binding>
 
-      </key>
-
-      <key n="44">
-        <name>comma</name>
-        <desc>Decrease alt</desc>
-        <repeatable type="bool">true</repeatable>
-        <binding>
-          <command>nasal</command>
-          <script>CarrierControl.incalt(-10,65)</script>
-        </binding>
-
-      </key>
 
 
       <!-- Throttle -->

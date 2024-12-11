@@ -79,7 +79,33 @@
 		<flap-pos-norm type="float"> 0.0 </flap-pos-norm>
 	</surface-positions>
 
+<input>
+<keyboard>
 
+      <key n="46">
+        <name>period</name>
+        <desc>increase alt</desc>
+        <repeatable type="bool">true</repeatable>
+        <binding>
+          <command>nasal</command>
+          <script>CarrierControl.incalt(10,65,1)</script>
+        </binding>
+
+      </key>
+
+      <key n="44">
+        <name>comma</name>
+        <desc>Decrease alt</desc>
+        <repeatable type="bool">true</repeatable>
+        <binding>
+          <command>nasal</command>
+          <script>CarrierControl.incalt(-10,65,1)</script>
+        </binding>
+
+      </key>
+
+</keyboard>
+</input>
 	<nasal>
 		<!-- Nasal Carrier View -->
 		<CarrierControl>

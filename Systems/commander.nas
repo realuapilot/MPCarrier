@@ -139,7 +139,8 @@ var incSpeed = func (i) {
   gui.popupTip("Ordered " ~ speed ~ " kts ahead.")
 } 
 ##########################################################################
-var incalt = func (i,j) {
+var incalt = func (i,j,carrier) {
+  if (carrier == 1) {
   var alt = getprop("/ai/models/carrier/position/altitude-ft");
   var alt2 = 0;
   alt = alt + i;
@@ -147,6 +148,16 @@ var incalt = func (i,j) {
   setprop("/ai/models/carrier/position/altitude-ft", alt);
   setprop("/ai/models/carrier/position/deck-altitude-ft", alt2);
   gui.popupTip("Ordered " ~ alt ~ " ft.");
+  } else {
+      var alt = getprop("/ai/models/carrier[2]/position/altitude-ft");
+  var alt2 = 0;
+  alt = alt + i;
+  alt2 = alt + j;
+  setprop("/ai/models/carrier[2]/position/altitude-ft", alt);
+  setprop("/ai/models/carrier[2]/position/deck-altitude-ft", alt2);
+  gui.popupTip("Ordered " ~ alt ~ " ft.");
+  }
+
 } 
 
 ###########################################################################
@@ -180,9 +191,15 @@ var toggleAIControl = func {
 }
 
 
-var takemetophto = func {
+var takemetophto = func(carrier) {
+  if (carrier == 1) {
 setprop("ai/models/carrier/position/latitude-deg", 19.74857013); 
 setprop("ai/models/carrier/position/longitude-deg", -155.0318098);
+  } else {
+setprop("ai/models/carrier[2]/position/latitude-deg", 19.74857013); 
+setprop("ai/models/carrier[2]/position/longitude-deg", -155.0318098);
+  }
+
 }
 ###########################################################################
 var init = func {

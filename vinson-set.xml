@@ -73,6 +73,9 @@
 				<jettison-all type="bool">1</jettison-all>
 			</station>
 		</armament>
+		<falling type="int"> 0 </falling>
+		<splashed type="int"> 0 </splashed>
+
 	</controls>
 
 	<sim include="Systems/nimitz-views.xml">
@@ -206,6 +209,50 @@
 		<walkviews>
 			<file>Aircraft/MPCarrier/Systems/vinson-walk-views.nas</file>
 		</walkviews>
-	</nasal>
 
+		<carriersys>
+			<file>Aircraft/MPCarrier/Systems/messages.nas</file>
+		</carriersys>
+
+	 <notifications>
+            <file>Aircraft/MPCarrier/Systems/ArmamentNotification.nas</file>
+            <file>Aircraft/MPCarrier/Systems/GeoBridgedTransmitter.nas</file>
+        </notifications>
+        
+ <vector>
+            <file>Aircraft/MPCarrier/Systems/vector.nas</file> <!--math stuff. not thrust lol-->
+        </vector>
+
+<damage>
+            <file>Aircraft/MPCarrier/Systems/damage.nas</file>
+        </damage>
+
+	</nasal>
+<input>
+<keyboard>
+
+      <key n="46">
+        <name>period</name>
+        <desc>increase alt</desc>
+        <repeatable type="bool">true</repeatable>
+        <binding>
+          <command>nasal</command>
+          <script>CarrierControl.incalt(10,65,2)</script>
+        </binding>
+
+      </key>
+
+      <key n="44">
+        <name>comma</name>
+        <desc>Decrease alt</desc>
+        <repeatable type="bool">true</repeatable>
+        <binding>
+          <command>nasal</command>
+          <script>CarrierControl.incalt(-10,65,2)</script>
+        </binding>
+
+      </key>
+
+</keyboard>
+</input>
 </PropertyList>
