@@ -191,6 +191,8 @@ var toggleAIControl = func {
 }
 
 
+# tyn30.127816765192218, -85.64046317466962
+
 var takemetophto = func(carrier) {
   if (carrier == 1) {
 setprop("ai/models/carrier/position/latitude-deg", 19.74857013); 
@@ -201,6 +203,29 @@ setprop("ai/models/carrier[2]/position/longitude-deg", -155.0318098);
   }
 
 }
+# 36.082809, -114.775220
+var takemetoklsv = func(carrier) { # neveda bay
+  if (carrier == 1) {
+setprop("ai/models/carrier/position/latitude-deg", 36.082809); 
+setprop("ai/models/carrier/position/longitude-deg", -114.775220);
+  } else {
+setprop("ai/models/carrier[2]/position/latitude-deg", 36.082809); 
+setprop("ai/models/carrier[2]/position/longitude-deg", -114.775220);
+  }
+
+}
+
+var takemetokpam = func(carrier) { # KPAM
+  if (carrier == 1) {
+setprop("ai/models/carrier/position/latitude-deg", 30.127816765192218); 
+setprop("ai/models/carrier/position/longitude-deg", -85.64046317466962);
+  } else {
+setprop("ai/models/carrier[2]/position/latitude-deg", 30.127816765192218); 
+setprop("ai/models/carrier[2]/position/longitude-deg", -85.64046317466962);
+  }
+
+}
+
 ###########################################################################
 var init = func {
   var carriers =
