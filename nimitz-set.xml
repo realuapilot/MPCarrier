@@ -31,7 +31,11 @@
 		<model>
 			<path>Aircraft/MPCarrier/Models/mp-nimitz.xml</path>
 		</model>
-
+		<submodels> 
+    		<serviceable type="bool">true</serviceable>
+    		<path>Aircraft/MPcarrier/Submodels.xml</path>           
+			 
+  		</submodels>
 		<systems>
 
 			<electrical>
@@ -43,9 +47,15 @@
 
 		</systems>
 
+
+
+
 		<instrumentation>
 			<path/>
 		</instrumentation>
+
+
+
 
 		<hud>
 			<path n="1">Aircraft/MPCarrier/Systems/LSO.xml</path>
@@ -65,12 +75,91 @@
 			<nimitz-callsign type="string"></nimitz-callsign>
 		</mp-carriers>
 	</sim>
+    <sam>
+        <impact0 type="double">-1</impact0>
+        <impact1 type="double">-1</impact1>
+        <impact2 type="double">-1</impact2>
+        <impact3 type="double">-1</impact3>
+        <hit0 type="double">-1</hit0>
+        <hit1 type="double">-1</hit1>
+        <hit2 type="double">-1</hit2>
+        <hit3 type="double">-1</hit3>
+        <missiles type="double">4</missiles>
+        <timeleft type="double">10</timeleft>
+        <damage type="double">100</damage>
+    </sam>
 
+        <enemies>
+        <e1 userarchive="y" type="string">target1</e1>
+        <e2 userarchive="y" type="string">target2</e2>
+        <e3 userarchive="y" type="string">target3</e3>
+        <e4 userarchive="y" type="string">target4</e4>
+        <e5 userarchive="y" type="string">target5</e5>
+        <e6 userarchive="y" type="string">target6</e6>
+        <e7 userarchive="y" type="string">target7</e7>
+        <e8 userarchive="y" type="string">target8</e8>
+        <e9 userarchive="y" type="string">target9</e9>
+        <e10 userarchive="y" type="string">targetA</e10>
+        <e11 userarchive="y" type="string">targetB</e11>
+        <e12 userarchive="y" type="string">targetC</e12>
+    </enemies>
+
+    <priority type="int">0</priority>
+    <priority0 type="int">1</priority0>
+	    <instrumentation>
+        <datalink>
+            <data type="int">0</data>
+            <power type="bool">true</power>
+            <channel type="int">1212</channel>
+            <power_prop type="string">/instrumentation/datalink/power</power_prop>
+            <channel_prop type="string">instrumentation/datalink/channel</channel_prop>
+            <receive_period type="double">1</receive_period>
+        </datalink>
+    </instrumentation>
 	<controls>
+<!--Y is Left to right
+X is In and Out 
+Z is Up and down-->
 		<rudder-pos-deg type="float"> 0.0 </rudder-pos-deg>
 		<speed-kts type="float"> 0.0 </speed-kts>
 		<falling type="int"> 0 </falling>
 		<splashed type="int"> 0 </splashed>
+
+        <armament>
+            <station n="1">
+                <offsets>
+                    <x-m type="double"> -50</x-m>
+                    <y-m type="double"> 30</y-m>
+                    <z-m type="double">  3.8</z-m>
+                </offsets>
+            </station>
+            <station n="2">
+                <offsets>
+                    <x-m type="double"> 205</x-m>
+                    <y-m type="double"> 30</y-m>
+                    <z-m type="double">  3.8</z-m>
+                </offsets>
+            </station>
+            <station n="3">
+                <offsets>
+                    <x-m type="double">  205</x-m>
+                    <y-m type="double"> -25</y-m>
+                    <z-m type="double">  3.8</z-m>
+                </offsets>
+            </station>
+            <station n="4">
+                <offsets>
+                    <x-m type="double">  -50</x-m>
+                    <y-m type="double"> 30</y-m>
+                    <z-m type="double">  3.8</z-m>
+                </offsets>
+            </station>
+        </armament>
+        <sounds>
+                    <launch type="int">0</launch>
+                    <gun type="int">0</gun>
+        </sounds>
+
 	</controls>
 
 	<surface-positions>
@@ -150,7 +239,21 @@
 <damage>
             <file>Aircraft/MPCarrier/Systems/damage.nas</file>
         </damage>
+		<radar_logic>
+            <file>Aircraft/MPCarrier/Nasal/radar-logic.nas</file>
+        </radar_logic>
 
+        <armament>
+            <file>Aircraft/MPCarrier/Nasal/guided-missiles.nas</file>
+        </armament>
+        <datalink>
+            <file>Aircraft/MPCarrier/Nasal/datalink.nas</file>
+        </datalink>
+		<fire_control>
+        			<file>Aircraft/MPCarrier/Nasal/fire-control-custom.nas</file>
+			<file>Aircraft/MPCarrier/Nasal/fire-control.nas</file>
+
+		</fire_control>
 
 	</nasal>
 

@@ -15,10 +15,36 @@
 
     <multiplay>
       <generic>
+
+
+                <int n="0" alias="/instrumentation/datalink/channel"/> <!--Sam Code-->
+                <int n="2" type="int">0</int>
+                                <string n="3" type="string"></string><!--string 3 used to determine which UAV goes up to what target-->
+<string n="5" type="string">SAMCTRL</string> <!--This is a Sam Control Center, Let Sams be able to connect to us!-->
+                <string n="6" type="string"></string><!-- string 6 used by radar lock RWR warning -->
+                <string n="7" type="string"></string><!-- datalink -->
+ <string n="8" alias="/enemies/e1"/>
+ <string n="9" alias="/enemies/e2"/>
+<string n="10" alias="/enemies/e3"/>
+<string n="11" alias="/enemies/e4"/>
+<string n="12" alias="/enemies/e5"/>
+<string n="13" alias="/enemies/e6"/> <!--Target list to send to SAM's-->
+<string n="14" alias="/enemies/e7"/>
+<string n="15" alias="/enemies/e8"/>
+<string n="16" alias="/enemies/e9"/>
+<string n="17" alias="/enemies/e10"/>
+<string n="18" alias="/enemies/e11"/>
+<string n="19" alias="/enemies/e12"/>
+
+
         <string n="0" type="string"></string><!-- MP events -->
         <float n="0" alias="controls/tgt-heading-degs"/>
         <float n="1" alias="controls/tgt-speed-kts"/>
         <float n="2" alias="controls/turn-radius-ft"/>
+
+
+        <float n="9" type="float"></float>
+        <float n="10" type="float"></float>
       </generic>
     </multiplay>
 
@@ -36,6 +62,33 @@
 				<menu n="10">
 					<label>MP Carrier</label>
 					<enabled type="bool">true</enabled>
+<item>
+			<label>Goto KPAM (Nimitz)</label>
+			<binding>
+				<command>nasal</command>
+				<script>
+						CarrierControl.takemetokpam(1);			
+      				</script>
+			</binding>
+		</item>
+<item>
+			<label>Goto PHTO (Nimitz)</label>
+			<binding>
+				<command>nasal</command>
+				<script>
+						CarrierControl.takemetophto(1);			
+      				</script>
+			</binding>
+		</item>
+<item>
+			<label>Goto KLSV (Nimitz)</label>
+			<binding>
+				<command>nasal</command>
+				<script>
+						CarrierControl.takemetoklsv(1);
+				</script>
+			</binding>
+		</item>
 
 <item>
 			<label>Toggle Damage</label>
@@ -58,7 +111,54 @@
 				</script>
 			</binding>
 		</item>
-
+                                        <item>
+                        <label>Reload</label>
+                        <binding>
+                            <command>nasal</command>
+                            <script>
+                                fire_control.reload();
+                            </script>
+                        </binding>
+                    </item>
+                    <item>
+                      <label>Targets And Remote Sam Targets</label>
+                      <name>enemies</name>
+                      <binding>
+                        <command>dialog-show</command>
+                        <dialog-name>enemies</dialog-name>
+                      </binding>
+                    </item>
+  
+                    <item>
+                      <label>Change Datalink (Remote Sam Code)</label>
+                      <name>enemies</name>
+                      <binding>
+                        <command>dialog-show</command>
+                        <dialog-name>priority</dialog-name>
+                      </binding>
+                    </item>
+                    <item>
+                        <label>Relocate to cursor last click</label>
+                        <binding>
+                            <command>nasal</command>
+                            <script>
+                                setprop("position/latitude-deg",getprop("sim/input/click/latitude-deg"));
+                                setprop("position/longitude-deg",getprop("sim/input/click/longitude-deg"));
+                                setprop("position/altitude-ft",getprop("sim/input/click/elevation-ft"));
+                                var h = geo.elevation(getprop("sim/input/click/latitude-deg"),getprop("sim/input/click/longitude-deg"));
+                                if (h!=nil)
+                                    setprop("position/altitude-ft",h*M2FT+0.030);
+                                fire_control.start_time = systime();
+                            </script>
+                        </binding>
+                    </item>
+                    <item>
+                        <label>Event Log</label>
+                        <binding>
+                            <command>dialog-show</command>
+                            <dialog-name>flightlog</dialog-name>
+                        </binding>
+                    </item>
 				</menu>
 			</default>
 		</menubar>
@@ -103,16 +203,71 @@
 
 		
 	  <armament>
-            <enable-craters type="bool">true</enable-craters>
-            <MLW-bearing type="double">0</MLW-bearing>
-            <MLW-count type="int">0</MLW-count>
-            <MLW-launcher type="string"></MLW-launcher>
-            <MAW-bearing type="double">0</MAW-bearing>
-            <MAW-active type="bool">false</MAW-active>
-            <MAW-semiactive type="bool">false</MAW-semiactive>
-            <msg type="bool">true</msg> <!--NOTE!!!: This gets set to false in nasal on startup. maybe weapons.nas?         Todo: , And make the missiles appear on Target. dadadadadadadadaadadadadadadaadadad acording to all known laws of avation. theres no way a bee should be able to fly-->
-            <spike type="bool">false</spike>
-            <models type="string">Aircraft/MPCarrier/Models/emesary/</models>
+				<models type="string">Aircraft/MPCarrier/Models/Armament/Weapons/</models>
+                <modelsUseCase type="bool">true</modelsUseCase>
+                <modelsUpperCase type="bool">true</modelsUpperCase>
+                <MP-lat type="string">rotors/main/blade[0]/flap-deg</MP-lat>
+                <MP-lon type="string">rotors/main/blade[1]/flap-deg</MP-lon>
+                <MP-alt type="string">rotors/main/blade[2]/flap-deg</MP-alt>
+                <MP-alt-ft type="string">rotors/main/blade[2]/position-deg</MP-alt-ft>
+                <hit-interpolation type="bool">true</hit-interpolation>
+                <gnd-launch type="bool">true</gnd-launch>
+                <pylon-offset type="int">1</pylon-offset>
+                <pylon-stations>controls/armament</pylon-stations>
+                <station-name type="string">station</station-name>
+				<msg type="bool">true</msg>
+				<damage type="bool">true</damage>
+                <enable-craters type="bool">true</enable-craters>
+                <MLW-bearing type="double">0</MLW-bearing>
+                <MLW-count type="int">0</MLW-count>
+                <MLW-launcher type="string"></MLW-launcher>
+                <MAW-bearing type="double">0</MAW-bearing>
+                <MAW-active type="bool">false</MAW-active>
+                <spike type="bool">false</spike>
+                                        
+				<m111>
+                    <type-id type="int">65</type-id>
+                    <short-name type="string">5Ya23</short-name>
+                    <long-name type="string">M111</long-name>
+					<vol-search type="double">0.00</vol-search>
+                    <vol-track type="double">0.00</vol-track>
+					<guidance type="string">command</guidance>
+                    <navigation type="string">LOS</navigation>                   <!-- horizontal APN, vertical aim 5 degrees above for 6 seconds -->
+					<max-fire-range-nm type="int">300</max-fire-range-nm>      <!--  -->
+					<FCS-field-deg type="int">360</FCS-field-deg>
+					<seeker-field-deg type="int">360</seeker-field-deg>
+                    <weight-warhead-lbs>414</weight-warhead-lbs>                   <!--  -->
+                    <min-fire-range-nm type="double">1</min-fire-range-nm>     <!-- authentic -->
+                    <rail-length-m type="double">10.60</rail-length-m>             <!-- authentic length-->
+                    <stage-1-duration-sec type="double">15</stage-1-duration-sec> 
+                    <weight-launch-lbs>5340</weight-launch-lbs>                      <!--  -->                  
+                    <drag-coeff type="double">0.10</drag-coeff>                 <!-- was 0.40 in older versions -->
+                    <thrust-lbf-stage-1 type="double">120000</thrust-lbf-stage-1> <!-- source -->
+                    <rail type="bool">true</rail>                                <!--  -->                  
+                    <rail-point-forward type="bool">false</rail-point-forward>
+                    <cross-section-sqft type="double">4.14243818</cross-section-sqft>                <!-- authentic (0.7m diameter) -->
+                    <class type="string">A</class>
+                    <fire-msg>Bird away</fire-msg>
+                    <telemetry type="bool">true</telemetry> 
+                    <proportionality-constant type="double">3</proportionality-constant>
+                    <!--  -->
+                    <max-g type="int">59</max-g>                                <!-- wikipedia -->
+                    <thrust-lbf-stage-2 type="double"> 40000</thrust-lbf-stage-2>  <!-- 6834 according to source, but is too low for 5Ya23 -->
+					<stage-2-duration-sec type="double">120</stage-2-duration-sec><!--  -->					
+                    <weight-fuel-lbm>25</weight-fuel-lbm>                       <!--  -->									
+					<arming-time-sec type="double">1</arming-time-sec> 
+					<min-speed-for-guiding-mach type="double">0.4</min-speed-for-guiding-mach> 
+                    <chaff-resistance type="double">0.999</chaff-resistance>
+					<self-destruct-time-sec type="double">120</self-destruct-time-sec> 
+					<loft-altitude type="int">0</loft-altitude>					
+                    <max-report-distance type="double">300</max-report-distance> <!--  -->					
+                    <rail-pitch-deg type="double">90</rail-pitch-deg>          <!-- matching mount -->
+                    <ready-time type="int">1</ready-time>					
+                    <FCS-at-origin type="bool">false</FCS-at-origin>         
+                    <FCS-x type="double">0</FCS-x>
+                    <FCS-y type="double">0</FCS-y>
+                    <FCS-z type="double">25</FCS-z>
+                </m111>
         </armament>
     </payload>
 
